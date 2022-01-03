@@ -16,14 +16,24 @@
     if(fName == null) {
         return;
     }
+
+    if(!fName) {
+        alert("Please enter something to create a folder");
+        return;
+    }
     
-    fid++;
-    addFolderInPage(fName,fid);
-    
-    folders.push({
-        id: fid,
-        name: fName
-    });
+    let fidx = folders.findIndex(f=> f.name == fName);
+    if(fidx == -1) {
+        fid++;
+        addFolderInPage(fName,fid);
+        
+        folders.push({
+            id: fid,
+            name: fName
+        });
+    } else {
+        alert(fName + " Folder already exists");
+    }
     persistFolders();
 }
 
@@ -63,13 +73,34 @@
 }
 
    function editFolder() {
-        let fName = prompt("Enter the name of the folder");
-        if(fName == null) {
-            return;
-        }
         
         let divFolder = this.parentNode;
         let divName = divFolder.querySelector("[name='name']")
+    
+        let fName = prompt("Enter the name of the folder");
+
+        if(fName == null) {
+            return;
+        }
+
+        if(!fName) {
+            alert("Enter a new Name for the folder " + divName.textContent);
+            return;
+        }
+
+        let efid = parseInt(divFolder.getAttribute("fid"));
+
+        let exists = folders.some(f=> f.name == fName && f.id != efid);
+        if(exists) {
+            alert("This folder already exists. Please enter a valid new name");
+            return;
+        }
+
+        let sameName = folders.some(f => f.name == fName && f.id == efid);
+        if(sameName) {
+            alert(fName + " is already the name of this folder. Please try something unique");
+            return;
+        }
 
         divName.textContent = fName;
         let folder = folders.find(f=> f.id == parseInt(divFolder.getAttribute("fid")));
