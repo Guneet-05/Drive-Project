@@ -9,7 +9,11 @@
     margin-left: 600px;
     padding: 20px;
     border-radius: 20px;
-    
+    cursor: pointer;
+}
+
+#createFolderButton:hover {
+    transform: scale(1.03);
 }
 
 .folder {
@@ -19,4 +23,14 @@
     margin: 10px;
     background-color: antiquewhite;
     border-radius: 10px;
+}
+
+.folder [action] {
+    text-decoration: underline;
+    padding: 5px;
+    cursor: pointer;
+}
+
+div[name=name] {
+    margin-top: 30px;
 }
